@@ -15,10 +15,14 @@ func main(){
 	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
-		logger.Info("header", zap.Any("headers", r.Header))
 		switch r.Method {
 		case http.MethodGet:
-			logger.Info("get request", zap.String("url", r.URL.Path), zap.String("query", r.URL.Query().Encode()))
+			logger.Info("request",
+				zap.String("method", http.MethodGet),
+				zap.String("url", r.URL.Path),
+				zap.String("query", r.URL.Query().Encode()),
+				zap.Any("headers", r.Header),
+			)
 		case http.MethodPost:
 			body, err := ioutil.ReadAll(r.Body)
 			if err != nil{
@@ -26,9 +30,11 @@ func main(){
 				return
 			}
 			logger.Info("post request",
+				zap.String("method", http.MethodPost),
 				zap.String("url", r.URL.Path),
 				zap.String("query", r.URL.Query().Encode()),
 				zap.String("body", string(body)),
+				zap.Any("headers", r.Header),
 			)
 		default:
 			logger.Info("undefined method type")

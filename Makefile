@@ -6,5 +6,4 @@ docker-build:
 	docker build -t soichisumi0/http-mock-server:$(TAG) .
 
 docker-push:
-	make docker-build
 	docker push soichisumi0/http-mock-server:$(TAG)

@@ -8,5 +8,6 @@ RUN make go-build
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates \
     && apk add --no-cache libc6-compat
+ENV PORT 3000
 COPY --from=build /go/src/tmp/exe .
 ENTRYPOINT ["./exe"]
